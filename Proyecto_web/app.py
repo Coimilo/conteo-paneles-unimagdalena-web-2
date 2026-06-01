@@ -45,7 +45,7 @@ image_path = os.path.join(BASE_DIR, "images", nombre_archivo)
 img_ready = os.path.exists(image_path)
 
 if img_ready:
-    st.sidebar.success(f"⚡ Procesando en tiempo real: {nombre_archivo}")
+    st.sidebar.success(f" Procesando en tiempo real: {nombre_archivo}")
 else:
     st.sidebar.error(f"No se encontró '{nombre_archivo}'")
 
