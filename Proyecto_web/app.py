@@ -154,8 +154,9 @@ if img_ready:
             col_gray_inf.image(gray_inf, caption="(b) Escala de Grises", use_container_width=True)
             col_blur_inf.image(blur_inf, caption="(c) Filtrado Gaussiano", use_container_width=True)
             
-            st.divider()
-            st.subheader("Análisis de Distribución de Amplitud (Histogramas)")
+                st.divider()
+                
+                st.subheader("📊 Análisis de Distribución de Amplitud (Histogramas)")
                 st.markdown("La línea discontinua roja representa el **umbral de corte** seleccionado actualmente en el panel lateral.")
                 
                 # Renderizado de los dos Histogramas de Frecuencia Espacial
@@ -180,9 +181,9 @@ if img_ready:
                 axs_hist[1].grid(True, alpha=0.3)
                 
                 fig_hist.tight_layout()
-            
-            st.pyplot(fig_hist)
-            plt.close(fig_hist)
+                st.pyplot(fig_hist)
+                plt.close(fig_hist)  # Liberación de memoria del objeto gráfico
+
 
         with tab2:
             st.subheader("Operaciones No Lineales de Amplitud")
