@@ -58,7 +58,7 @@ image_path = os.path.join(BASE_DIR, "images", nombre_archivo)
 img_ready = os.path.exists(image_path)
 
 if img_ready:
-    st.sidebar.success(f"⚡ Procesando en tiempo real: {nombre_archivo}")
+    st.sidebar.success(f" Procesando en tiempo real: {nombre_archivo}")
 else:
     st.sidebar.error(f"No se encontró '{nombre_archivo}'")
 
@@ -127,10 +127,10 @@ if img_ready:
         
         # PESTAÑAS ESTRUCTURALES
         tab1, tab2, tab3, tab4 = st.tabs([
-            "1. Adquisición y Preprocesamiento (Figs. 3-5)",
-            "2. Segmentación Híbrida (Fig. 6)",
-            "3. Morfología Matemática (Fig. 7)",
-            "4. Resultados y Conteo (Fig. 8)"
+            "1. Adquisición y Preprocesamiento",
+            "2. Segmentación Híbrida",
+            "3. Morfología Matemática",
+            "4. Resultados y Conteo"
         ])
 
         with tab1:
