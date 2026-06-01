@@ -58,7 +58,7 @@ image_path = os.path.join(BASE_DIR, "images", nombre_archivo)
 img_ready = os.path.exists(image_path)
 
 if img_ready:
-    st.sidebar.success(f" Procesando en tiempo real: {nombre_archivo}")
+    st.sidebar.success(f"⚡ Procesando en tiempo real: {nombre_archivo}")
 else:
     st.sidebar.error(f"No se encontró '{nombre_archivo}'")
 
@@ -127,10 +127,10 @@ if img_ready:
         
         # PESTAÑAS ESTRUCTURALES
         tab1, tab2, tab3, tab4 = st.tabs([
-            "1. Adquisición y Preprocesamiento",
-            "2. Segmentación Híbrida",
-            "3. Morfología Matemática",
-            "4. Resultados y Conteo"
+            "1. Adquisición y Preprocesamiento (Figs. 3-5)",
+            "2. Segmentación Híbrida (Fig. 6)",
+            "3. Morfología Matemática (Fig. 7)",
+            "4. Resultados y Conteo (Fig. 8)"
         ])
 
         with tab1:
@@ -154,36 +154,20 @@ if img_ready:
             col_gray_inf.image(gray_inf, caption="(b) Escala de Grises", use_container_width=True)
             col_blur_inf.image(blur_inf, caption="(c) Filtrado Gaussiano", use_container_width=True)
             
-                st.divider()
-                
-                st.subheader("📊 Análisis de Distribución de Amplitud (Histogramas)")
-                st.markdown("La línea discontinua roja representa el **umbral de corte** seleccionado actualmente en el panel lateral.")
-                
-                # Renderizado de los dos Histogramas de Frecuencia Espacial
-                fig_hist, axs_hist = plt.subplots(1, 2, figsize=(14, 4.5))
-                
-                # Gráfico ROI Superior
-                axs_hist[0].hist(blur_sup.ravel(), bins=256, range=[0, 256], color='#1f77b4', alpha=0.7, rwidth=0.9)
-                axs_hist[0].axvline(x=threshold_sup, color='r', linestyle='--', linewidth=2.5, label=f"Umbral = {threshold_sup}")
-                axs_hist[0].set_title("Histograma Frecuencias Espaciales - ROI Superior")
-                axs_hist[0].set_xlabel("Intensidad de Gris")
-                axs_hist[0].set_ylabel("Píxeles")
-                axs_hist[0].legend(loc="upper right")
-                axs_hist[0].grid(True, alpha=0.3)
-                
-                # Gráfico ROI Inferior
-                axs_hist[1].hist(blur_inf.ravel(), bins=256, range=[0, 256], color='#2ca02c', alpha=0.7, rwidth=0.9)
-                axs_hist[1].axvline(x=threshold_inf, color='r', linestyle='--', linewidth=2.5, label=f"Umbral = {threshold_inf}")
-                axs_hist[1].set_title("Histograma Frecuencias Espaciales - ROI Inferior")
-                axs_hist[1].set_xlabel("Intensidad de Gris")
-                axs_hist[1].set_ylabel("Píxeles")
-                axs_hist[1].legend(loc="upper right")
-                axs_hist[1].grid(True, alpha=0.3)
-                
-                fig_hist.tight_layout()
-                st.pyplot(fig_hist)
-                plt.close(fig_hist)  # Liberación de memoria del objeto gráfico
-
+            st.divider()
+            st.subheader("Análisis de Distribución de Amplitud (Histogramas)")
+            fig_hist, axs_hist = plt.subplots(1, 2, figsize=(14, 4.5))
+            
+            axs_hist[0].hist(blur_sup.ravel(), bins=256, range=[0, 256], color='#1f77b4', alpha=0.7)
+            axs_hist[0].axvline(x=threshold_sup, color='r', linestyle='--', linewidth=2.5)
+            axs_hist[0].set_title("Histograma ROI Superior")
+            
+            axs_hist[1].hist(blur_inf.ravel(), bins=256, range=[0, 256], color='#2ca02c', alpha=0.7)
+            axs_hist[1].axvline(x=threshold_inf, color='r', linestyle='--', linewidth=2.5)
+            axs_hist[1].set_title("Histograma ROI Inferior")
+            
+            st.pyplot(fig_hist)
+            plt.close(fig_hist)
 
         with tab2:
             st.subheader("Operaciones No Lineales de Amplitud")
