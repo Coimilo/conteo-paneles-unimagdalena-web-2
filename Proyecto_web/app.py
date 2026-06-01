@@ -25,8 +25,21 @@ st.set_page_config(
 st.title("☀️ Proyecto de Segmentación de Imágenes de Dron")
 st.markdown("""
 Esta aplicación web presenta el flujo de procesamiento paso a paso, modelando la imagen aérea como una **señal discreta bidimensional**, aplicando técnicas de filtrado espacial, operaciones no lineales de amplitud y morfología matemática.
-*Desarrollado por: Luis Mercado y Camilo Cantillo*
 """)
+
+# Justificación técnica (Teoría de señales)
+with st.expander("📘 Fundamentos de Señales Espaciales (Justificación Técnica)"):
+    st.markdown("""
+    **Marco Teórico - Procesamiento de Señales I**
+    
+    Para este análisis sobre el edificio docente de la Universidad del Magdalena, la imagen se aborda formalmente como una **señal discreta bidimensional**, donde cada píxel es una muestra espacial.
+    
+    * **Filtrado Espacial (Pasa-bajas):** Antes de la segmentación, se aplica un suavizado Gaussiano. En el dominio de las frecuencias, esto actúa como un filtro pasa-bajas que atenúa el ruido de alta frecuencia (variaciones bruscas), estabilizando la señal.
+    * **Umbralización (Operación no lineal):** La segmentación es una operación no lineal sobre la amplitud de la señal espacial. Se utilizó una estrategia híbrida (adaptativa y global) para contrarrestar los cambios de iluminación y sombras.
+    * **Morfología Matemática:** Funciona como un filtro espacial no lineal de post-procesamiento para rellenar discontinuidades y separar frecuencias espaciales adyacentes (paneles muy juntos).
+    
+    *Desarrollado por: Camilo Cantillo, Luis Mercado*
+    """)
 
 # =========================================================
 # BARRA LATERAL (SIDEBAR) 
@@ -45,7 +58,7 @@ image_path = os.path.join(BASE_DIR, "images", nombre_archivo)
 img_ready = os.path.exists(image_path)
 
 if img_ready:
-    st.sidebar.success(f" Procesando en tiempo real: {nombre_archivo}")
+    st.sidebar.success(f"⚡ Procesando en tiempo real: {nombre_archivo}")
 else:
     st.sidebar.error(f"No se encontró '{nombre_archivo}'")
 
@@ -127,10 +140,19 @@ if img_ready:
             st.divider()
             st.subheader("Transformación y Filtrado Espacial Pasa-Bajas")
             
-            col_rgb, col_gray, col_blur = st.columns(3)
-            col_rgb.image(roi_sup, caption="(a) ROI Superior RGB", use_container_width=True)
-            col_gray.image(gray_sup, caption="(b) Escala de Grises", use_container_width=True)
-            col_blur.image(blur_sup, caption="(c) Filtrado Gaussiano", use_container_width=True)
+            # ROI Superior
+            st.markdown("**Región Superior (Techo Edificio Docente)**")
+            col_rgb_sup, col_gray_sup, col_blur_sup = st.columns(3)
+            col_rgb_sup.image(roi_sup, caption="(a) ROI Superior RGB", use_container_width=True)
+            col_gray_sup.image(gray_sup, caption="(b) Escala de Grises", use_container_width=True)
+            col_blur_sup.image(blur_sup, caption="(c) Filtrado Gaussiano", use_container_width=True)
+            
+            # ROI Inferior
+            st.markdown("**Región Inferior (Módulos en Suelo)**")
+            col_rgb_inf, col_gray_inf, col_blur_inf = st.columns(3)
+            col_rgb_inf.image(roi_inf, caption="(a) ROI Inferior RGB", use_container_width=True)
+            col_gray_inf.image(gray_inf, caption="(b) Escala de Grises", use_container_width=True)
+            col_blur_inf.image(blur_inf, caption="(c) Filtrado Gaussiano", use_container_width=True)
             
             st.divider()
             st.subheader("Análisis de Distribución de Amplitud (Histogramas)")
@@ -176,7 +198,7 @@ if img_ready:
             
             roi_sup_draw = roi_sup.copy()
             roi_inf_draw = roi_inf.copy()
-            cv2.drawContours(roi_sup_draw, paneles_sup, -1, (255, 0, 100), 3) # Usando magenta/rojo como en el PDF
+            cv2.drawContours(roi_sup_draw, paneles_sup, -1, (255, 0, 100), 3) # Usando magenta/rojo
             cv2.drawContours(roi_inf_draw, paneles_inf, -1, (255, 0, 100), 3)
 
             col_final_1, col_final_2 = st.columns(2)
