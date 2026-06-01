@@ -1,5 +1,5 @@
-opencv-python
-numpy
-matplotlib
 streamlit
+opencv-python-headless
+numpy
 pillow
+matplotlib
