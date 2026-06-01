@@ -127,10 +127,10 @@ if img_ready:
         
         # PESTAÑAS ESTRUCTURALES
         tab1, tab2, tab3, tab4 = st.tabs([
-            "1. Adquisición y Preprocesamiento (Figs. 3-5)",
-            "2. Segmentación Híbrida (Fig. 6)",
-            "3. Morfología Matemática (Fig. 7)",
-            "4. Resultados y Conteo (Fig. 8)"
+            "1. Adquisición y Preprocesamiento",
+            "2. Segmentación Híbrida",
+            "3. Morfología Matemática",
+            "4. Resultados y Conteo"
         ])
 
         with tab1:
@@ -159,11 +159,11 @@ if img_ready:
             fig_hist, axs_hist = plt.subplots(1, 2, figsize=(14, 4.5))
             
             axs_hist[0].hist(blur_sup.ravel(), bins=256, range=[0, 256], color='#1f77b4', alpha=0.7)
-            axs_hist[0].axvline(x=threshold_sup, color='r', linestyle='--', linewidth=2.5)
+            axs_hist[0].axvline(x=threshold_sup, color='r', linestyle='--', linewidth=2.5, label=f"Umbral = {threshold_sup}")
             axs_hist[0].set_title("Histograma ROI Superior")
             
             axs_hist[1].hist(blur_inf.ravel(), bins=256, range=[0, 256], color='#2ca02c', alpha=0.7)
-            axs_hist[1].axvline(x=threshold_inf, color='r', linestyle='--', linewidth=2.5)
+            axs_hist[1].axvline(x=threshold_inf, color='r', linestyle='--', linewidth=2.5, label=f"Umbral = {threshold_inf}")
             axs_hist[1].set_title("Histograma ROI Inferior")
             
             st.pyplot(fig_hist)
